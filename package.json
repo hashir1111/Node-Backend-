@@ -1,0 +1,20 @@
+{
+  "name": "bigproject",
+  "version": "1.0.0",
+  "description": "A project on practise of Backend",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon src/index.js"
+  },
+  "keywords": [
+    "backend",
+    "javascript",
+    "middlewares"
+  ],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^3.1.4"
+  }
+}
