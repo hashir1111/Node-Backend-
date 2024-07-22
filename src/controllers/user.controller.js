@@ -6,12 +6,12 @@ import { ApiResponse } from "../utils/ApiResponse.js";
 
 const generateAccessAndRefreshTokens = async (userId) => {
   try {
-    const user = await User.findOne(userId);
+    const user = await User.findById(userId);
     const accessToken = user.generateAccessToken();
     const refreshToken = user.generateRefreshToken();
 
     user.refreshToken = refreshToken;
-    await user.save({ ValidateBeforeSave: false });
+    await user.save({ validateBeforeSave: false });
 
     return { accessToken, refreshToken };
   } catch (error) {
@@ -82,7 +82,7 @@ const registerUser = AsyncHandler(async (req, res) => {
 const userLogin = AsyncHandler(async (req, res) => {
   const { userName, email, password } = req.body;
 
-  if (!userName || !email) {
+  if (!(userName || !email)) {
     throw new ApiError(400, "userName or email is required");
   }
 
@@ -104,7 +104,7 @@ const userLogin = AsyncHandler(async (req, res) => {
     user._id
   );
 
-  const loggedInUser = await User.findById(_id).select(
+  const loggedInUser = await User.findById(user._id).select(
     " -password -refreshToken"
   );
 
@@ -145,4 +145,4 @@ const userLogut = AsyncHandler(async (req, res) => {
     .json(new ApiResponse(200, {}, "user logged out"));
 });
 
-export { registerUser, userLogin , userLogut };
+export { registerUser, userLogin, userLogut };
